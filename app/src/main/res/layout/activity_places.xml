@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".activity.PlaceActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+
+        <ListView
+            android:id="@+id/lvPlaceAct"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+        <TextView
+            android:id="@+id/txtNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif"
+            android:textSize="25dp"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnAddNewPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"/>
+
+    </FrameLayout>
+    <Button
+        android:id="@+id/btnShowOnMap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="2px"
+        android:background="#68b1e6"
+        android:textColor="#fff"
+        android:text="@string/text_show_all_in_map"/>
+
+</LinearLayout>

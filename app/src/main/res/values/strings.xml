@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">My Lovely Place</string>
+    <string name="no_data">No data available</string>
+    <string name="text_retrieving_data">Retrieving data &#8230;</string>
+    <string name="text_saving_data">Saving data &#8230;</string>
+    <string name="text_deleting_data">Deleting data &#8230;</string>
+    <string name="text_show_all_in_map">Show All Places On Map</string>
+    <string name="text_detail_place">Detail place</string>
+    <string name="text_place_name">Place Name</string>
+    <string name="text_place_address">Place Address</string>
+    <string name="text_place_description">Place Description</string>
+    <string name="text_add_place">Add new place</string>
+    <string name="text_hint_place_name">Enter place name...</string>
+    <string name="text_hint_place_address">Enter place address...</string>
+    <string name="text_hint_place_description">Enter place description...</string>
+    <string name="text_title_act_insert">Add new place</string>
+    <string name="text_title_act_update">Edit old Place</string>
+</resources>
