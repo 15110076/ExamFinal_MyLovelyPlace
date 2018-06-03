@@ -47,57 +47,52 @@ public class PlaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places);
+        //khởi tạo để có thể dung thư viện butterKnife
         ButterKnife.bind(this);
+        //khởi tạo dữ liệu
         init();
     }
-
+    //method khởi tạo data
     private void init() {
+        //lấy thông tin category ID từ activity CategoryActivity truyền qua
         categoryID=getIntent().getStringExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA);
+        //getinstant class PlaceRepo
         placeRepo=PlaceRepo.getInstance(this);
+        //đỗ danh sách place vào Adapter vì danh sách place ko thể bỏ trực tiếp
+        //vào ListView được phải qua trung gian là Adapter
         placesAdapter=new PlacesAdapter(this,places);
-
+        //khởi tạo 1 ProgressDialog
         initProgressDialog();
-
+        //hàm lấy danh sách place và bỏ vào ListView
         getPlaceByCategoryID();
+        //
         onPlaceClick();
     }
-
-//    private void addtestdata(){
-//        Place place = new Place.Builder()
-//                .setPlaceID(UUID.randomUUID().toString())
-//                .setCategoryID(categoryID)
-//                .setPlaceName("abd")
-//                .setPlaceAddress("abd")
-//                .setPlaceDescription("abc")
-//                .setPlaceImages(null)
-//                .setPlaceLat(0)
-//                .setPlaceLng(0)
-//                .buil();
-//        places.add(place);
-//    }
-
-
+    //method lấy danh sách place từ category ID
     private void getPlaceByCategoryID(){
-
+        //lấy dánh sách
         places = placeRepo.getAllPlace(categoryID);
-        //addtestdata();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                //kiểm tra danh sách có rỗng hay không
                 if(!places.isEmpty()){
 
                     txtnodata.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),"Load Data Successed",Toast.LENGTH_SHORT).show();
                 }
+                //đỗ PlacesAdapter vào ListView
                 lvPlaces.setAdapter(placesAdapter);
+                //cập nhật lại dánh sách PlacesAdapter nếu có thay đổi xảy ra
                 placesAdapter.updatePlace(places);
+                //Hủy progressDialog
                 progressDialog.dismiss();
             }
         },3000);
 
     }
-
+    //method khởi tạo ProgressDialog
     private void initProgressDialog(){
         progressDialog=new ProgressDialog(PlaceActivity.this);
         progressDialog.setIndeterminate(true);
@@ -106,6 +101,8 @@ public class PlaceActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
+    //Xử lý sự kiện click của từng item trong listview
+    //khi click sẽ put thông tin category ID vs Place ID qua activity datailPlace
     private void onPlaceClick(){
         lvPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -120,6 +117,9 @@ public class PlaceActivity extends AppCompatActivity {
 
     }
 
+    //Xử lý sự kiện click thêm 1 place mới với 1 category thuộc danh sách hiện tại
+    //Put CategoryID qua để xác định thêm Place theo Category nào
+    //và 1 cái cờ xác định là dung chức năng insert hay update
     @OnClick(R.id.btnAddNewPlace)
     public void addNewPlace(){
         Intent addPlace = new Intent(PlaceActivity.this,AddPlaceActivity.class);
@@ -127,7 +127,8 @@ public class PlaceActivity extends AppCompatActivity {
         addPlace.putExtra(ActivityUtils.FLAG_IS_INSERT_OR_UPDATE,true);
         startActivity(addPlace);
     }
-
+    //Xử lý sự kiện hiện thị tất cả địa điểm có trong danh sách lên Map
+    //Put CategoryID qua Activity MapActivity để lấy danh sách place theo categoryID
     @OnClick(R.id.btnShowOnMap)
     public void showAllPlaceOnMap(){
         Intent intent = new Intent(this, MapActivity.class);

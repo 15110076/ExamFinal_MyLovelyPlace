@@ -51,29 +51,36 @@ public class DetailPlaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_place);
 
+        //khởi tao ButterKnife
         ButterKnife.bind(this);
-
+        //hàm khởi tạo
         init();
 
     }
 
     private void init() {
+        //Lấy placeID
         placeID =getIntent().getStringExtra(ActivityUtils.PLACE_KEY_PUT_EXTRA);
+        //lấy CategoryID
         categoryID=getIntent().getStringExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA);
         placeRepo=PlaceRepo.getInstance(this);
+        //log xem thông tin lấy được hay ko
         Log.d("Test",placeID +" "+ categoryID);
+
         initProgressDialog();
         setPlace();
 
 
     }
 
+    //method set Place
     private void setPlace(){
-
+        //lấy danh sách Place dựa trên placeiD và categoryID
        place = placeRepo.getPlaceByID(categoryID,placeID);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 if(place.getPlaceImages() != null) {
                     Bitmap placeBitmap = BitmapFactory.decodeByteArray(place.getPlaceImages(), 0, place.getPlaceImages().length);
                     imgPlace.setImageBitmap(placeBitmap);
@@ -87,7 +94,7 @@ public class DetailPlaceActivity extends AppCompatActivity {
         },4000);
 
     }
-
+    //method khởi tạo ProgressDialog cho setup place
     private void initProgressDialog(){
         progressDialog=new ProgressDialog(DetailPlaceActivity.this);
         progressDialog.setIndeterminate(true);
@@ -95,6 +102,7 @@ public class DetailPlaceActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
     }
+    //method khởi tạo ProgressDialog cho delete
     private void initProgressDialogdelete(){
         progressDialogDelete=new ProgressDialog(DetailPlaceActivity.this);
         progressDialogDelete.setIndeterminate(true);
@@ -102,6 +110,7 @@ public class DetailPlaceActivity extends AppCompatActivity {
         progressDialogDelete.setCanceledOnTouchOutside(false);
         progressDialogDelete.show();
     }
+    //method khởi tạo ProgressDialog cho update
     private void initProgressDialogupdate(){
         progressDialogUpdate=new ProgressDialog(DetailPlaceActivity.this);
         progressDialogUpdate.setIndeterminate(true);
@@ -110,20 +119,24 @@ public class DetailPlaceActivity extends AppCompatActivity {
         progressDialogUpdate.show();
     }
 
+    //Xử lý sự kiện back về Activity trước đó
     @OnClick(R.id.btnClose)
     public void closeActivitiDetail(){
+        //chuển đên Activity PlaceActivity
         redirecttoListPlace();
 
     }
-
+    //xử lý chức năng Delete 1 place
     @OnClick(R.id.btnDelete)
     public void deletePlace(View view){
-
+                //khởi tạo ProgressDialog
                 initProgressDialogdelete();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        //Delete place theo PlaceID
                         placeRepo.delete(placeID);
+                        //hủy progressDialog
                         progressDialogDelete.dismiss();
                         redirecttoListPlace();
                     }
@@ -131,9 +144,11 @@ public class DetailPlaceActivity extends AppCompatActivity {
 
     }
 
+    //Xử lý sự kiện click edit 1 place với 1 category thuôc danh sách hiện tại
+    //Put CategoryID qua để xác định thêm Place theo Category nào
+    //và 1 cái cờ xác định là dung chức năng insert hay update
     @OnClick(R.id.btnEdit)
     public void editPlace(View view){
-
         Intent placeEditIntent = new Intent(DetailPlaceActivity.this,AddPlaceActivity.class);
         placeEditIntent.putExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA,categoryID);
         placeEditIntent.putExtra(ActivityUtils.PLACE_KEY_PUT_EXTRA,placeID);

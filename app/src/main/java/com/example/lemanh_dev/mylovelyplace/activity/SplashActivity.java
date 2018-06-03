@@ -28,6 +28,8 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+
         ButterKnife.bind(this);
 
         Animation transitionAmin = AnimationUtils.loadAnimation(this,R.anim.transition_icon);

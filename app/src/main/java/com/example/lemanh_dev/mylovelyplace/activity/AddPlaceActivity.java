@@ -57,10 +57,13 @@ public class AddPlaceActivity extends AppCompatActivity {
     private static final int REQUEST_CODE =1;
     private String categoryID;
     private String placeDetailID;
+    //cợ xác định có chụp ảnh hay chưa
     private boolean isTaken = false;
+
     private ProgressDialog progressDialog;
     private PlaceRepo placeRepo;
     private Place placeDetail;
+    //cờ xác định insert hay update
     private boolean flag = true ;
 
     @Override
@@ -69,9 +72,10 @@ public class AddPlaceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_place);
 
         ButterKnife.bind(this);
-
+        //lấy thtông in cờ là Insert hay Update
         flag = getIntent().getExtras().getBoolean(FLAG_IS_INSERT_OR_UPDATE);
 
+        //true là Insert và ngược lại
         if(flag){
             initInsert();
         }
@@ -83,6 +87,7 @@ public class AddPlaceActivity extends AppCompatActivity {
 
     }
 
+    //khởi tạo khi chức năng là insert
     private void initInsert() {
         categoryID = getIntent().getStringExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA);
         txtTitleAct.setText(getResources().getText(R.string.text_title_act_insert));
@@ -90,6 +95,7 @@ public class AddPlaceActivity extends AppCompatActivity {
         initProgressDialog();
     }
 
+    //khởi tạo khi chức năng là update
     private void initUpdate() {
         categoryID = getIntent().getStringExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA);
         placeDetailID = getIntent().getStringExtra(ActivityUtils.PLACE_KEY_PUT_EXTRA);
@@ -99,9 +105,8 @@ public class AddPlaceActivity extends AppCompatActivity {
         progressDialog.show();
         setPlace();
     }
-
+    //set place khi chức năng là update
     private void setPlace(){
-
         placeDetail = placeRepo.getPlaceByID(categoryID,placeDetailID);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -122,7 +127,7 @@ public class AddPlaceActivity extends AppCompatActivity {
 
     }
 
-
+    //khởi tạo Progressdialog
     private void initProgressDialog() {
         progressDialog=new ProgressDialog(AddPlaceActivity.this);
         progressDialog.setIndeterminate(true);
@@ -134,13 +139,16 @@ public class AddPlaceActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        //nếu chụp ảnh rồi
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+            //kiểm tra dữ liệu trả về có null hay ko
             if(data ==null){
                 isTaken =false;
             }
             else {
+                //cờ đã chụp ảnh rồi thành true
                 isTaken=true;
+                //lấy ảnh vữa chuoj bỏ lên Image Place
                 Bitmap placeImg = (Bitmap) data.getExtras().get("data");
                 imagePlace.setImageBitmap(placeImg);
             }
@@ -164,9 +172,11 @@ public class AddPlaceActivity extends AppCompatActivity {
     @OnClick(R.id.btnClose)
     public void goBack(){
         if(flag){
+            //về activity PlaceActivity
             redirecttoListPlace();
         }
         else {
+            //về activity DetailActivity
             redirecttoDetailPlace();
         }
     }
@@ -180,7 +190,7 @@ public class AddPlaceActivity extends AppCompatActivity {
         return imageInByte;
     }
 
-    //xu ly su kien them moi 1 dia diem
+    //xu ly su kien them moi 1 dia diem hoặc update 1 địa điểm
     @OnClick(R.id.btnAddSave)
     public void clickSave(View v){
 
@@ -266,7 +276,7 @@ public class AddPlaceActivity extends AppCompatActivity {
         }
     }
 
-    //chuyen huong den trang chi tiet san place vua chonj chinh sua
+    //chuyen huong den trang chi tiet san place vua chon chinh sua
     private void redirecttoDetailPlace(){
         Intent detailPlaceIntent = new Intent(AddPlaceActivity.this,DetailPlaceActivity.class);
         detailPlaceIntent.putExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA,categoryID);
@@ -286,7 +296,8 @@ public class AddPlaceActivity extends AppCompatActivity {
     //xu ly lay kinh do va vi do cua dia chi
     private class GetCoordinates extends AsyncTask<String,Void,String> {
         ProgressDialog dialog = new ProgressDialog(AddPlaceActivity.this);
-
+        //khi vựa nhấn Get loaction
+        //mở progessDialog
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -294,7 +305,7 @@ public class AddPlaceActivity extends AppCompatActivity {
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
         }
-
+        //bắt đấu lấy dữ liệu
         @Override
         protected String doInBackground(String... strings) {
             String response;
@@ -311,7 +322,8 @@ public class AddPlaceActivity extends AppCompatActivity {
             }
             return null;
         }
-
+        //post lên giao diện
+        //và tắt progressDialog
         @Override
         protected void onPostExecute(String s) {
             try{

@@ -34,8 +34,9 @@ public class CategoriesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-
+        //hkoiwr tao ButterKnife
         ButterKnife.bind(this);
+        //Hàm khởi tạo ban đầu
         init();
     }
 
@@ -49,28 +50,32 @@ public class CategoriesActivity extends AppCompatActivity {
         txtATM.setText(categoryList.get(3).getCategoryName());
     }
 
+    //Click chọn Restaurant
     @OnClick(R.id.layoutRestaurant)
     void clickOnRestaurant(){
         String categoryID = categoryList.get(0).getCategoryID();
         startActivity(categoryID);
     }
+    //Click chọn Cinema
     @OnClick(R.id.layoutCinema)
     void clickOnCinema(){
         String categoryID = categoryList.get(1).getCategoryID();
         startActivity(categoryID);
     }
-
+    //Click chọn Fashion
     @OnClick(R.id.layoutFashion)
     void clickOnFashion(){
         String categoryID = categoryList.get(2).getCategoryID();
         startActivity(categoryID);
     }
+    //Click chọn ATM
     @OnClick(R.id.layoutATM)
     void clickOnATM(){
         String categoryID = categoryList.get(3).getCategoryID();
         startActivity(categoryID);
     }
 
+    //hàm xử lý start activity theo từng lại category lên trang PlaceAcitivity
     private void startActivity(String categoryID){
         Intent placesIntent = new Intent(CategoriesActivity.this,PlaceActivity.class);
         placesIntent.putExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA,categoryID);
