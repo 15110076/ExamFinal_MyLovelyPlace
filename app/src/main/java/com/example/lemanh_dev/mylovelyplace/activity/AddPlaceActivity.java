@@ -96,6 +96,7 @@ public class AddPlaceActivity extends AppCompatActivity {
         txtTitleAct.setText(getResources().getText(R.string.text_title_act_update));
         placeRepo= PlaceRepo.getInstance(this);
         initProgressDialog();
+        progressDialog.show();
         setPlace();
     }
 
@@ -162,7 +163,12 @@ public class AddPlaceActivity extends AppCompatActivity {
     //tro ve activity truoc
     @OnClick(R.id.btnClose)
     public void goBack(){
-        super.onBackPressed();
+        if(flag){
+            redirecttoListPlace();
+        }
+        else {
+            redirecttoDetailPlace();
+        }
     }
 
     //convert imageview to byte[]

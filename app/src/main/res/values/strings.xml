@@ -15,4 +15,5 @@
     <string name="text_hint_place_description">Enter place description...</string>
     <string name="text_title_act_insert">Add new place</string>
     <string name="text_title_act_update">Edit old Place</string>
+    <string name="key_map_api">AIzaSyCGBkM5dRSEnB63Oe_W1MDFzNpi1Bnw9K4</string>
 </resources>

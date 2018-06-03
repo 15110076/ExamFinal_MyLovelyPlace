@@ -112,7 +112,7 @@ public class DetailPlaceActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnClose)
     public void closeActivitiDetail(){
-        super.onBackPressed();
+        redirecttoListPlace();
 
     }
 

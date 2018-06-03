@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lemanh_dev.mylovelyplace.ActivityUtils;
+import com.example.lemanh_dev.mylovelyplace.MapActivity;
 import com.example.lemanh_dev.mylovelyplace.R;
 import com.example.lemanh_dev.mylovelyplace.adapter.PlacesAdapter;
 import com.example.lemanh_dev.mylovelyplace.data.PlaceRepo;
@@ -93,7 +94,7 @@ public class PlaceActivity extends AppCompatActivity {
                 placesAdapter.updatePlace(places);
                 progressDialog.dismiss();
             }
-        },4000);
+        },3000);
 
     }
 
@@ -129,7 +130,9 @@ public class PlaceActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnShowOnMap)
     public void showAllPlaceOnMap(){
-        Toast.makeText(getApplicationContext(),"Show all",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra(ActivityUtils.CATEGORY_KEY_PUT_EXTRA,categoryID);
+        startActivity(intent);
     }
 
 }
